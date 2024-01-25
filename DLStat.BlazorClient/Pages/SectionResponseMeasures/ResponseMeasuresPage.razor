@@ -1,0 +1,28 @@
+﻿@page "/ResponseMeasuresPage"
+@using DLStat.BlazorClient.Models
+@inject HttpClient httpClient;
+<h3>Раздел 3. Сведения о мерах прокурорского реагирования</h3>
+
+@foreach (var r in responseMeasures)
+{
+    <p>@r.BySK
+        @r.ByMVD
+        @r.ByFSB
+        @r.Overall
+    </p>
+}
+
+
+@code {
+    private ResponseMeasures[]? responseMeasures = new ResponseMeasures[]{};
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dataFromDb = await httpClient.GetFromJsonAsync<IEnumerable<ResponseMeasures>>("https://localhost:7246/api/ResponseMeasures/getAllPositions?userId=2&month=1&week=1&year=2024");
+        
+        responseMeasures = dataFromDb?.ToArray();
+
+
+       // forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+}

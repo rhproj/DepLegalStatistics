@@ -14,6 +14,16 @@ builder.Services.AddDbContext<AppDbConrtext>(opt => opt.UseSqlServer(builder.Con
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+
+builder.Services.AddCors(opt =>  //+
+{
+    opt.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+    //opt.AddPolicy("myAllow", builder => builder.WithOrigins("*"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(); //+
 
 app.UseAuthorization();
 
