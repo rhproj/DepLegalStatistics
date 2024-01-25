@@ -7,5 +7,6 @@ namespace DLStat.API.Models
         [Key]
         public int Id { get; set; }
         public string OperativeName { get; set; }
+        //public string? OperativeDepartment { get; set; }
     }
 }
