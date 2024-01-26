@@ -25,16 +25,23 @@ namespace DLStat.API.Controllers
         [HttpGet("getAllPositions")] //month + year will allow to set auto summ
         public async Task<IActionResult> GetAllPositions(int userId, byte month, byte week, int year) 
         {
-            var responseMeasures = await _dbContext.ResponseMeasures.Include(r => r.Position).Include(r => r.Operative)
-                .Where(r => 
-                   (r.OperativeId == userId)
-                && (r.ReportingYear == year)
-                && (r.ReportingMonth == month)
-                && (r.ReportingWeek == week)).ToListAsync();
+            try
+            {
+                var responseMeasures = await _dbContext.ResponseMeasures.Include(r => r.Position).Include(r => r.Operative)
+            .Where(r =>
+               (r.OperativeId == userId)
+            && (r.ReportingYear == year)
+            && (r.ReportingMonth == month)
+            && (r.ReportingWeek == week)).ToListAsync();
 
-            //var result = _mapper.Map<IEnumerable<ResponseMeasuresDTO>>(responseMeasures); //add another DTO for Presenting RM with Position names
+                //var result = _mapper.Map<IEnumerable<ResponseMeasuresDTO>>(responseMeasures); //add another DTO for Presenting RM with Position names
 
-            return Ok(responseMeasures);  //result);
+                return Ok(responseMeasures);  //result);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         [HttpPost("postPosition")]

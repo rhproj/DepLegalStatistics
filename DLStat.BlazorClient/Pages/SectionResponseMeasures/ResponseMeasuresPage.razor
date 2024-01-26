@@ -18,11 +18,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var dataFromDb = await httpClient.GetFromJsonAsync<IEnumerable<ResponseMeasures>>("https://localhost:7246/api/ResponseMeasures/getAllPositions?userId=2&month=1&week=1&year=2024");
-        
+        var dataFromDb = await httpClient.GetFromJsonAsync<IEnumerable<ResponseMeasures>>("http://localhost:3737/api/ResponseMeasures/getAllPositions?userId=2&month=1&week=1&year=2024"); 
+
         responseMeasures = dataFromDb?.ToArray();
 
-
-       // forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        // forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");   //https://localhost:7246/api/ResponseMeasures/getAllPositions?userId=2&month=1&week=1&year=2024
     }
 }
