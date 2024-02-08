@@ -1,5 +1,6 @@
 using AuthAPI.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseNpgsql(builder.Configuration.GetConnectionString("AuthDbPg"));
 });
-//мост м/ду EF и Identity
+//builder.Services.AddDefaultIdentity<IdentityUser>(); //Bzr
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders(); // - добавили ч/з точку 2
+    .AddDefaultTokenProviders(); 
 
 var app = builder.Build();
 
