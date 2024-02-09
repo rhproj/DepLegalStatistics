@@ -7,7 +7,7 @@ namespace AuthAPI.Service
 {
     public class AuthService : IAuthService
     {
-        private readonly AppDbContext _dbContext;  //Эти объекты идут из ASP.Identity и помогут с рег-ей пользователя,хэшир-ем паролей, Входом и т.п
+        private readonly AppDbContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
@@ -20,7 +20,7 @@ namespace AuthAPI.Service
         }
 
         public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
-        { //создадим нового пользователя
+        {
             IdentityUser user = new()
             {
                 UserName = registrationRequestDto.Email,
@@ -28,7 +28,7 @@ namespace AuthAPI.Service
                 NormalizedEmail = registrationRequestDto.Email.ToUpper(),
                 PhoneNumber = registrationRequestDto.PhoneNumber
             };
-
+            
             try
             {
                 var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
@@ -48,7 +48,7 @@ namespace AuthAPI.Service
                     return result.Errors.FirstOrDefault().Description;
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
             return "Обнаружена ошибка";
